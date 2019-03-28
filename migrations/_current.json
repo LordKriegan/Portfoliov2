@@ -1,0 +1,97 @@
+{
+    "tables": {
+        "Images": {
+            "tableName": "Images",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "imageLink": {
+                    "allowNull": false,
+                    "field": "imageLink",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "ProjectId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "Projects",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "ProjectId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "Projects": {
+            "tableName": "Projects",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "title": {
+                    "allowNull": false,
+                    "field": "title",
+                    "seqType": "Sequelize.STRING"
+                },
+                "liveLink": {
+                    "allowNull": false,
+                    "field": "liveLink",
+                    "seqType": "Sequelize.STRING"
+                },
+                "ghLink": {
+                    "allowNull": false,
+                    "field": "ghLink",
+                    "seqType": "Sequelize.STRING"
+                },
+                "summary": {
+                    "allowNull": false,
+                    "field": "summary",
+                    "seqType": "Sequelize.STRING(15000)"
+                },
+                "tech": {
+                    "allowNull": false,
+                    "field": "tech",
+                    "seqType": "Sequelize.STRING"
+                },
+                "role": {
+                    "allowNull": false,
+                    "field": "role",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "revision": 1
+}
