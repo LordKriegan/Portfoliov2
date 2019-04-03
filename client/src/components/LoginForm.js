@@ -22,15 +22,15 @@ class LoginForm extends Component {
             <div className="row">
                 <div className="col-sm-4 offset-sm-4">
                     <form>
-                        <div class="form-group">
-                            <label for="userName">User Name</label>
-                            <input name="username" onChange={this.onChangeHandler} value={this.state.username} type="email" class="form-control" id="userName" aria-describedby="Username" placeholder="Username" />
+                        <div className="form-group">
+                            <label htmlFor="userName">User Name</label>
+                            <input name="username" onChange={this.onChangeHandler} value={this.state.username} type="email" className="form-control" id="userName" aria-describedby="Username" placeholder="Username" />
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input name="password" onChange={this.onChangeHandler} value={this.state.password} type="password" class="form-control" id="password" placeholder="Password" />
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input name="password" onChange={this.onChangeHandler} value={this.state.password} type="password" className="form-control" id="password" placeholder="Password" />
                         </div>
-                        <button onClick={this.submitHandler} type="submit" class="btn btn-primary">Submit</button>
+                        <button onClick={this.submitHandler} type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>

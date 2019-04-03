@@ -25,9 +25,15 @@ class Admin extends Component {
             })
     }
     render() {
+        //disabled logion while working on edit page
+        // return(
+        //     <LayoutNoSidebar>
+        //         {(this.state.loggedIn) ? <EditProjects /> : <LoginForm login={this.login} />}
+        //     </LayoutNoSidebar>
+        // )
         return(
             <LayoutNoSidebar>
-                {(this.state.loggedIn) ? <EditProjects /> : <LoginForm login={this.login} />}
+            <EditProjects />
             </LayoutNoSidebar>
         )
     }

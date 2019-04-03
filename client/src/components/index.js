@@ -1,5 +1,5 @@
 import Navbar from './Navbar';
-import Sidebar from './Sidebar/Sidebar';
+import Sidebar from './Sidebar';
 import Footer from './Footer';
 import Card from './Card';
 import DefaultLayout from './DefaultLayout';
