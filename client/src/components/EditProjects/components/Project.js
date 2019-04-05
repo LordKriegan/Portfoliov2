@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { MdClear } from 'react-icons/md';
-
+import { ProjectImage } from './';
 
 class Project extends Component {
 
@@ -39,9 +39,19 @@ class Project extends Component {
                             <input style={{ width: "100%" }} name="liveLink" value={this.state.liveLink} onChange={this.onChange} />
                         </div>
                     </div>
-                </>)
+                    </>)
             case "images":
-                return (<p>images edit placeholder</p>)
+                return (<div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "true"
+                }}>
+                    {this.state.images.map((elem, i) => {
+                        return (
+                            <ProjectImage key={i} image={elem} removeImg={() => true} />
+                        )
+                    })}
+                    </div>)
             default:
                 return null
         }
@@ -67,7 +77,7 @@ class Project extends Component {
         })
     }
     state = {
-        section: "summary",
+        section: "title",
         summary: "",
         title: "",
         tech: "",
@@ -83,12 +93,23 @@ class Project extends Component {
             section: e.target.name
         })
     }
+
     componentDidMount() {
         if (this.props.projectId) {
-            axios
-                .get("/api/projects/" + this.props.projectId)
-                .then((response) => {
-                    console.log(response.data)
+            this.loadProject()
+        }
+    }
+    componentDidUpdate() {
+        if (this.props.projectId) {
+            this.loadProject()
+        }
+    }
+    loadProject = () => {
+        axios
+            .get("/api/projects/" + this.props.projectId)
+            .then((response) => {
+                console.log(response.data)
+                if (this.state.title !== response.data[0].title) {
                     this.setState({
                         summary: response.data[0].summary,
                         role: response.data[0].role,
@@ -96,13 +117,13 @@ class Project extends Component {
                         tech: response.data[0].tech.split(","),
                         ghLink: response.data[0].ghLink,
                         liveLink: response.data[0].liveLink,
-                        images: response.data[0].Images
+                        images: response.data[0].Images.map((elem) => elem.imageLink)
                     })
-                })
-                .catch((error) => {
-                    console.error(error)
-                })
-        }
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }
     render() {
         return (
