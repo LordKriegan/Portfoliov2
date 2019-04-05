@@ -3,8 +3,10 @@ import React from 'react';
 const ProjectList = (props) => {
     return (
         <form>
-            <label htmlFor="projectSelect">Select a Project</label>
-            <div className="form-group">
+            
+            <div className="form-group row">
+                <label classname="col-2" htmlFor="projectSelect">Select a Project</label>
+                <div className="col-10">
                 <select name={props.name} onChange={props.onChange} style={{ width: "100%" }} className="form-control-lg" id="projectSelect">
                     <option value=""></option>
                     {props.projectList.map((elem, i) => {
@@ -13,6 +15,7 @@ const ProjectList = (props) => {
                         )
                     })}
                 </select>
+                </div>
             </div>
         </form>
     )
