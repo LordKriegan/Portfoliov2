@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { ProjectList, Project } from './components';
 import axios from 'axios';
 
-const FILESTACKAPIKEY = "A1HD3At9LTJ6SPmsQpgBaz";
-
 class EditProjects extends Component {
     state = {
         projectList: '',
@@ -39,7 +37,7 @@ class EditProjects extends Component {
                     }
                 </div>
                 <div className="col-4">
-                    <button type="button" className="btn btn-primary">Add New Project...</button>
+                    <button onClick={() => this.setState({projectId: "new project"})} type="button" className="btn btn-primary">Add New Project...</button>
                 </div>
             </div>
             <div className="row">

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { MdClear } from 'react-icons/md';
 import { ProjectImage } from './';
-
+import ReactFilestack, { client } from 'filestack-react';
 class Project extends Component {
 
     renderEditor = (section) => {
@@ -12,12 +12,22 @@ class Project extends Component {
             case "summary":
                 return (<textarea style={{ width: "100%" }} onChange={this.onChange} name="summary" value={this.state.summary} rows="3"></textarea>)
             case "tech":
-                return (<div className="text-center">
-                    {this.state.tech.map((elem, i) => {
-                        return <span key={i}><span><button onClick={() => this.removeTech(i)} style={{ borderRadius: "50%" }} class="btn btn-primary"><MdClear /></button>{elem}</span></span>
-                    })}
+                return (<div className="text-center" style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap"
+                }}>
+                    {(this.state.tech.length) ? this.state.tech.map((elem, i) => {
+                        return <span style={{
+                            border: "solid",
+                            borderRadius: "10%",
+                            borderWidth: "2px",
+                            padding: "0 10px 0 10px",
+                            margin: "5px"
+                        }} key={i}><span><button onClick={() => this.removeTech(i)} style={{marginRight: "2px", borderRadius: "50%" }} className="btn btn-outline-danger"><MdClear /></button>{elem}</span></span>
+                    }) : ""}
                     <div className="input-group mb-3">
-                        <input name="newTech" value={this.state.newTech} onChange={this.onChange} type="text" className="form-control" placeholder="Add new tech" />
+                        <input onKeyUp={(e) => {if (e.keyCode === 13) this.addTech()}} name="newTech" value={this.state.newTech} onChange={this.onChange} type="text" className="form-control" placeholder="Add new tech" />
                         <div className="input-group-append">
                             <button onClick={this.addTech} className="btn btn-primary" type="button">Add Tech</button>
                         </div>
@@ -39,22 +49,67 @@ class Project extends Component {
                             <input style={{ width: "100%" }} name="liveLink" value={this.state.liveLink} onChange={this.onChange} />
                         </div>
                     </div>
-                    </>)
+                </>)
             case "images":
-                return (<div style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "true"
-                }}>
-                    {this.state.images.map((elem, i) => {
-                        return (
-                            <ProjectImage key={i} image={elem} removeImg={() => true} />
-                        )
-                    })}
-                    </div>)
+                return (<>
+                    <div className="row">
+                        <div className="col-12">
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                flexWrap: "wrap",
+                                justifyContent: "center"
+                            }}>
+                                {(this.state.images.length) ? this.state.images.map((elem, i) => {
+                                    return (
+                                        <ProjectImage style={{ flex: "1 0 21%" }} key={i} image={elem} removeImg={() => this.removeImg(i)} />
+                                    )
+                                }) : ""}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12 text-center">
+                            <ReactFilestack
+                                apikey="A1HD3At9LTJ6SPmsQpgBaz"
+                                buttonText="Add Images"
+                                buttonClass="btn btn-outline-secondary"
+                                options={{
+                                    accept: 'image/*',
+                                    fromSources: ["local_file_system"],
+                                    maxFiles: 20,
+                                    storeTo: {
+                                        location: 's3',
+                                    },
+                                }}
+                                onSuccess={this.addImages}
+                                preload={true}
+                            />
+                        </div>
+                    </div>
+                </>)
             default:
                 return null
         }
+    }
+    addImages = (result) => {
+        if (result.filesFailed.length) {
+            console.error("Error while uplaoding files");
+        } else {
+            console.log(result)
+            let imgArr = this.state.images.slice();
+            let newImgs = result.filesUploaded.map((elem) => elem.url);
+            this.setState({
+                images: imgArr.concat(newImgs)
+            });
+        }
+    }
+    removeImg = (i) => {
+        let imgArr = this.state.images.slice();
+        imgArr.splice(i, 1);
+        this.setState({
+            images: imgArr
+        })
     }
     removeTech = (i) => {
         let techArr = this.state.tech.slice();
@@ -67,7 +122,8 @@ class Project extends Component {
         let techArr = this.state.tech.slice();
         techArr.push(this.state.newTech)
         this.setState({
-            tech: techArr
+            tech: techArr,
+            newTech: ""
         })
     }
     onChange = (e) => {
@@ -77,15 +133,16 @@ class Project extends Component {
         })
     }
     state = {
+        projectId: "",
         section: "title",
         summary: "",
         title: "",
-        tech: "",
+        tech: [],
         newTech: "",
         role: "",
         ghLink: "",
         liveLink: "",
-        images: ""
+        images: []
     }
     onClick = (e) => {
         e.preventDefault();
@@ -95,18 +152,39 @@ class Project extends Component {
     }
 
     componentDidMount() {
-        if (this.props.projectId) {
-            this.loadProject()
+        if (this.props.projectId !== "new project") {
+            this.setState({
+                projectId: this.props.projectId
+            }, () => this.loadProject())
+        } else {
+            this.setState({
+                projectId: "new project"
+            })
         }
     }
-    componentDidUpdate() {
-        if (this.props.projectId) {
-            this.loadProject()
+    componentDidUpdate(prevProps) {
+        if ((this.props.projectId !== prevProps.projectId) && this.props.projectId !== "new project") {
+            this.setState({
+                projectId: this.props.projectId
+            }, () => this.loadProject())
+        } else if ((prevProps.projectId !== "new project") && (this.props.projectId === "new project")) {
+            this.setState({
+                projectId: "new project",
+                section: "title",
+                summary: "",
+                title: "",
+                tech: [],
+                newTech: "",
+                role: "",
+                ghLink: "",
+                liveLink: "",
+                images: []
+            })
         }
     }
     loadProject = () => {
         axios
-            .get("/api/projects/" + this.props.projectId)
+            .get("/api/projects/" + this.state.projectId)
             .then((response) => {
                 console.log(response.data)
                 if (this.state.title !== response.data[0].title) {
@@ -125,34 +203,80 @@ class Project extends Component {
                 console.error(error)
             })
     }
+    saveProject = () => {
+        const { title, liveLink, ghLink, summary, tech, role, images, projectId } = this.state;
+        if ((!title) ||
+            (!liveLink) ||
+            (!ghLink) ||
+            (!summary) ||
+            (!tech.length) ||
+            (!role) ||
+            (!images.length)) {
+            console.error("missing data")
+            return;
+        } else {
+            const newData = {
+                title: title,
+                liveLink: liveLink,
+                ghLink: ghLink,
+                summary: summary,
+                tech: tech.join(','),
+                role: role,
+                images: images
+            }
+            console.log(newData)
+            if (projectId === "new project") {
+                axios
+                    .post("/api/projects/", newData)
+                    .then((response) => {
+                        console.log(response.data);
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } else {
+                axios
+                    .put("/api/projects/" + projectId, newData)
+                    .then((response) => {
+                        console.log(response.data);
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    })
+            }
+        }
+
+    }
     render() {
         return (
             <>
-            <div className="row">
-                <div className="col-12">
-                    <div className="btn-group">
-                        <button onClick={this.onClick} name="title" type="button" className="btn btn-primary">Title</button>
-                        <button onClick={this.onClick} name="summary" type="button" className="btn btn-primary">Summary</button>
-                        <button onClick={this.onClick} name="tech" type="button" className="btn btn-primary">Technologies</button>
-                        <button onClick={this.onClick} name="role" type="button" className="btn btn-primary">My Role</button>
-                        <button onClick={this.onClick} name="links" type="button" className="btn btn-primary">Links</button>
-                        <button onClick={this.onClick} name="images" type="button" className="btn btn-primary">Images</button>
+                <div className="row">
+                    <div className="col-12 text-center">
+                        <div className="btn-group">
+                            <button onClick={this.onClick} name="title" type="button" className="btn btn-primary">Title</button>
+                            <button onClick={this.onClick} name="summary" type="button" className="btn btn-primary">Summary</button>
+                            <button onClick={this.onClick} name="tech" type="button" className="btn btn-primary">Technologies</button>
+                            <button onClick={this.onClick} name="role" type="button" className="btn btn-primary">My Role</button>
+                            <button onClick={this.onClick} name="links" type="button" className="btn btn-primary">Links</button>
+                            <button onClick={this.onClick} name="images" type="button" className="btn btn-primary">Images</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="row">
-                <div className="col-12">
-                    {/* {this.sections[this.state.section]} */}
-                    {this.renderEditor(this.state.section)}
+                <div className="row">
+                    <div className="col-12">
+                        {/* {this.sections[this.state.section]} */}
+                        {this.renderEditor(this.state.section)}
+                    </div>
                 </div>
-            </div>
 
-            <div className="row">
-                <div className="col-12">
-                    <button type="button" className="btn btn-primary float-right">Save</button>
+                <div className="row">
+                    <div className="col-12">
+                        <button onClick={this.saveProject} type="button" className="btn btn-primary float-right">Save</button>
+                    </div>
                 </div>
-            </div>
             </>
         )
     }
