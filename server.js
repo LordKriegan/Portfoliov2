@@ -17,7 +17,11 @@ app.use(express.json());
 //create routes
 if (!isDev) {
     app.use(express.static(path.join(__dirname + '/client/build')));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname + '/client/build/index.html'));
+    });
 }
+
 app.use("/api", require('./routes/routes'));
 //start server
 db.sequelize.sync({force: isDev}).then(function() {
