@@ -7,7 +7,7 @@ const ProjectImage = (props) => {
         position: "relative",
         margin: "5px",
     }}>
-        <img style={{height: "240px", width: "320px", objectFit: "scale-down"}} className="img-fluid mx-auto d-block" src={props.image} />
+        <img alt="" style={{height: "240px", width: "320px", objectFit: "scale-down"}} className="img-fluid mx-auto d-block" src={props.image} />
         <button style={{
             
             position: "absolute",

@@ -1,93 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { MdClear } from 'react-icons/md';
-import { ProjectImage } from './';
-import ReactFilestack, { client } from 'filestack-react';
+import { ProjectImage, Input, Textarea, Techlist, Links, Images } from './';
+import ReactFilestack from 'filestack-react';
 class Project extends Component {
 
     renderEditor = (section) => {
         switch (section) {
             case "title":
-                return (<input style={{ width: "100%" }} name="title" value={this.state.title} onChange={this.onChange} />)
+                return (<Input name="title" value={this.state.title} onChange={this.onChange} />)
             case "summary":
-                return (<textarea style={{ width: "100%" }} onChange={this.onChange} name="summary" value={this.state.summary} rows="3"></textarea>)
+                return (<Textarea onChange={this.onChange} name="summary" value={this.state.summary} />)
             case "tech":
-                return (<div className="text-center" style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap"
-                }}>
-                    {(this.state.tech.length) ? this.state.tech.map((elem, i) => {
-                        return <span style={{
-                            border: "solid",
-                            borderRadius: "10%",
-                            borderWidth: "2px",
-                            padding: "0 10px 0 10px",
-                            margin: "5px"
-                        }} key={i}><span><button onClick={() => this.removeTech(i)} style={{marginRight: "2px", borderRadius: "50%" }} className="btn btn-outline-danger"><MdClear /></button>{elem}</span></span>
-                    }) : ""}
-                    <div className="input-group mb-3">
-                        <input onKeyUp={(e) => {if (e.keyCode === 13) this.addTech()}} name="newTech" value={this.state.newTech} onChange={this.onChange} type="text" className="form-control" placeholder="Add new tech" />
-                        <div className="input-group-append">
-                            <button onClick={this.addTech} className="btn btn-primary" type="button">Add Tech</button>
-                        </div>
-                    </div>
-                </div>)
+                return (<Techlist tech={this.state.tech} newTech={this.state.newTech} onChange={this.onChange} addTech={this.addTech} removeTech={this.removeTech} />)
             case "role":
-                return (<textarea rows="3" style={{ width: "100%" }} name="role" value={this.state.role} onChange={this.onChange}></textarea>)
+                return (<Textarea name="role" value={this.state.role} onChange={this.onChange} />)
             case "links":
-                return (<>
-                    <div className="form-group row">
-                        <label className="col-2" htmlFor="github link">Github Link</label>
-                        <div className="col-10">
-                            <input style={{ width: "100%" }} name="ghLink" value={this.state.ghLink} onChange={this.onChange} />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-2" htmlFor="Live link">Live Link</label>
-                        <div className="col-10">
-                            <input style={{ width: "100%" }} name="liveLink" value={this.state.liveLink} onChange={this.onChange} />
-                        </div>
-                    </div>
-                </>)
+               return <Links ghLink={this.state.ghLink} liveLink={this.state.liveLink} onChange={this.onChange} />
             case "images":
-                return (<>
-                    <div className="row">
-                        <div className="col-12">
-                            <div style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                flexWrap: "wrap",
-                                justifyContent: "center"
-                            }}>
-                                {(this.state.images.length) ? this.state.images.map((elem, i) => {
-                                    return (
-                                        <ProjectImage style={{ flex: "1 0 21%" }} key={i} image={elem} removeImg={() => this.removeImg(i)} />
-                                    )
-                                }) : ""}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12 text-center">
-                            <ReactFilestack
-                                apikey="A1HD3At9LTJ6SPmsQpgBaz"
-                                buttonText="Add Images"
-                                buttonClass="btn btn-outline-secondary"
-                                options={{
-                                    accept: 'image/*',
-                                    fromSources: ["local_file_system"],
-                                    maxFiles: 20,
-                                    storeTo: {
-                                        location: 's3',
-                                    },
-                                }}
-                                onSuccess={this.addImages}
-                                preload={true}
-                            />
-                        </div>
-                    </div>
-                </>)
+                return (<Images images={this.state.images} addImages={this.addImages} removeImg={this.removeImg} />)
             default:
                 return null
         }

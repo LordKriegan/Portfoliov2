@@ -2,18 +2,10 @@ import React, { Component } from 'react'
 import { Card, DefaultLayout, ProjectModal } from '../../components';
 import axios from 'axios';
 import Modal from 'react-modal';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const customStyles = {
     content: {
         backgroundColor: "rgba(0,0,0,0)",
-        border: "none",
-        // top: '25%',
-        // left: '50%',
-        // right: 'auto',
-        // bottom: 'auto',
-        // marginRight: '-50%',
-        // transform: 'translate(-50%, -50%)'
+        border: "none"
     }
 };
 
@@ -55,16 +47,6 @@ class Portfolio extends Component {
         }, () => this.openModal())
     }
     render() {
-{/* <Carousel useKeyboardArrows={true} emulateTouch={true} showArrows={false}>
-                            {this.state.data.map((elem, id) => {
-                                return (
-                                    <div style={{ cursor: "pointer" }} onClick={() => this.onClickHandler(elem)} key={id}>
-                                        <p className="legend">{elem.title}</p>
-                                        <img  className="img-fluid" src={elem.Images[0].imageLink} alt={elem.title} />
-                                    </div>
-                                )
-                            })}
-                        </Carousel> */}
         return (
             <DefaultLayout>
                 <Card title="Portfolio" titleClass="h1">
@@ -89,7 +71,7 @@ class Portfolio extends Component {
                                                     height: "240px",
                                                     width: "320px",
                                                     objectFit: "scale-down"
-                                                }} className="img-fluid mx-auto d-block" src={elem.Images[0].imageLink} />
+                                                }} className="img-fluid mx-auto d-block" src={elem.Images[0].imageLink} alt={elem.title} />
                                                 <p style={{
                                                     backgroundColor: "rgba(0, 0, 0, 0.5",
                                                     color: "white",
