@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 //dependencies
 const express = require('express');
 const path = require('path');
-
+const db = require('./models');
 //express setup
 const port = process.env.PORT || 3001;
 const app = express();
@@ -20,6 +20,8 @@ if (!isDev) {
 }
 app.use("/api", require('./routes/routes'));
 //start server
-app.listen(port, () => {
-    console.log("App listening on PORT " + port);
+db.sequelize.sync({force: isDev}).then(function() {
+    app.listen(port, function() {
+        console.log("App listening on PORT " + port);
+    });
 });
