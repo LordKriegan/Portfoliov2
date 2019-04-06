@@ -1,10 +1,13 @@
 import Navbar from './Navbar';
-import Sidebar from './Sidebar/Sidebar';
+import Sidebar from './Sidebar';
 import Footer from './Footer';
 import Card from './Card';
 import DefaultLayout from './DefaultLayout';
+import LayoutNoSidebar from './LayoutNoSidebar';
 import Alert from './Alert';
 import ProjectModal from './ProjectModal';
+import LoginForm from './LoginForm';
+import EditProjects from './EditProjects';
 
 export {
     Navbar,
@@ -12,6 +15,9 @@ export {
     Footer,
     Card,
     DefaultLayout,
+    LayoutNoSidebar,
     Alert,
-    ProjectModal
+    ProjectModal,
+    LoginForm,
+    EditProjects
 }

@@ -36,7 +36,6 @@ const projectController = {
             });
     },
     findOne: (req, res) => {
-        console.log(db);
         db.Project
             .findAll({
                 where: {

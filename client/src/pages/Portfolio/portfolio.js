@@ -2,18 +2,10 @@ import React, { Component } from 'react'
 import { Card, DefaultLayout, ProjectModal } from '../../components';
 import axios from 'axios';
 import Modal from 'react-modal';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const customStyles = {
     content: {
         backgroundColor: "rgba(0,0,0,0)",
-        border: "none",
-        // top: '25%',
-        // left: '50%',
-        // right: 'auto',
-        // bottom: 'auto',
-        // marginRight: '-50%',
-        // transform: 'translate(-50%, -50%)'
+        border: "none"
     }
 };
 
@@ -55,21 +47,44 @@ class Portfolio extends Component {
         }, () => this.openModal())
     }
     render() {
-
         return (
             <DefaultLayout>
-                <Card title="About Me" titleClass="h1">
+                <Card title="Portfolio" titleClass="h1">
                     {(this.state.data)
-                        ? <Carousel useKeyboardArrows={true} emulateTouch={true} showArrows={false}>
-                            {this.state.data.map((elem, id) => {
-                                return (
-                                    <div style={{ cursor: "pointer" }} onClick={() => this.onClickHandler(elem)} key={id}>
-                                        <p className="legend">{elem.title}</p>
-                                        <img className="img-fluid" src={elem.Images[0].imageLink} alt={elem.title} />
-                                    </div>
-                                )
-                            })}
-                        </Carousel>
+                        ? <div className="row">
+                            <div className="col-12">
+                                <div style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    flexWrap: "wrap",
+                                    justifyContent: "center"
+                                }}>
+                                    {this.state.data.map((elem, i) => {
+                                        return(
+                                            <div onClick={() => this.onClickHandler(elem)} style={{
+                                                border: "groove",
+                                                position: "relative",
+                                                margin: "5px",
+                                                cursor: "pointer"
+                                            }}>
+                                                <img style={{
+                                                    height: "240px",
+                                                    width: "320px",
+                                                    objectFit: "scale-down"
+                                                }} className="img-fluid mx-auto d-block" src={elem.Images[0].imageLink} alt={elem.title} />
+                                                <p style={{
+                                                    backgroundColor: "rgba(0, 0, 0, 0.5",
+                                                    color: "white",
+                                                    bottom: "10px",
+                                                    position: "absolute",
+                                                    width: "100%"
+                                                }} className="text-center">{elem.title}</p>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div>
                         : <p>Loading data...</p>}
                 </Card>
                 <Modal

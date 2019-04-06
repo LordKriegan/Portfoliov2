@@ -14,7 +14,7 @@ class ProjectModal extends Component {
         })
     }
     checkLink = (link) => {
-        if (link.match(/^https:\/\//gi) || link.match(/^http:\/\//gi)) return link
+        if (link.match(/^http[s]*:\/\/[\w]+/i)) return link
         else return "https://" + link
     }
     projInfo = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Portfolio, Contact, Err404 } from './pages';
+import { Home, Portfolio, Contact, Admin, Err404 } from './pages';
 import { Navbar, Footer } from './components';
 import './App.css'
 class App extends Component {
@@ -17,6 +17,7 @@ class App extends Component {
                 <Route exact path="/home" component={Home} />
                 <Route exact path="/portfolio" component={Portfolio} />
                 <Route exact path="/contact" component={Contact} />
+                <Route exact path="/admin" component={Admin} />
                 <Route component={Err404} />
               </Switch>
             </div>
