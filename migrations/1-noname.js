@@ -5,7 +5,9 @@ var Sequelize = require('sequelize');
 /**
  * Actions summary:
  *
+ * createTable "Education", deps: []
  * createTable "Projects", deps: []
+ * createTable "WorkHistories", deps: []
  * createTable "Images", deps: [Projects]
  *
  **/
@@ -13,11 +15,54 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "noname",
-    "created": "2019-03-05T06:57:02.849Z",
+    "created": "2019-04-10T04:12:11.706Z",
     "comment": ""
 };
 
-var migrationCommands = [
+var migrationCommands = [{
+        fn: "createTable",
+        params: [
+            "Education",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "id",
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
+                "school": {
+                    "type": Sequelize.STRING,
+                    "field": "school",
+                    "allowNull": false
+                },
+                "yearStart": {
+                    "type": Sequelize.INTEGER,
+                    "field": "yearStart",
+                    "allowNull": false
+                },
+                "yearEnd": {
+                    "type": Sequelize.INTEGER,
+                    "field": "yearEnd"
+                },
+                "degree": {
+                    "type": Sequelize.STRING,
+                    "field": "degree"
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
     {
         fn: "createTable",
         params: [
@@ -59,6 +104,50 @@ var migrationCommands = [
                     "type": Sequelize.STRING,
                     "field": "role",
                     "allowNull": false
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "WorkHistories",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "id",
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
+                "employer": {
+                    "type": Sequelize.STRING,
+                    "field": "employer",
+                    "allowNull": false
+                },
+                "yearStart": {
+                    "type": Sequelize.INTEGER,
+                    "field": "yearStart",
+                    "allowNull": false
+                },
+                "yearEnd": {
+                    "type": Sequelize.INTEGER,
+                    "field": "yearEnd"
+                },
+                "title": {
+                    "type": Sequelize.STRING,
+                    "field": "title"
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,

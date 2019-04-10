@@ -1,5 +1,46 @@
 {
     "tables": {
+        "Education": {
+            "tableName": "Education",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "school": {
+                    "allowNull": false,
+                    "field": "school",
+                    "seqType": "Sequelize.STRING"
+                },
+                "yearStart": {
+                    "allowNull": false,
+                    "field": "yearStart",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "yearEnd": {
+                    "field": "yearEnd",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "degree": {
+                    "field": "degree",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
         "Images": {
             "tableName": "Images",
             "schema": {
@@ -31,7 +72,7 @@
                         "model": "Projects",
                         "key": "id"
                     },
-                    "onDelete": "CASCADE",
+                    "onDelete": "NO ACTION",
                     "onUpdate": "CASCADE",
                     "field": "ProjectId",
                     "seqType": "Sequelize.INTEGER"
@@ -77,6 +118,47 @@
                 "role": {
                     "allowNull": false,
                     "field": "role",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "WorkHistories": {
+            "tableName": "WorkHistories",
+            "schema": {
+                "id": {
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "autoIncrement": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "employer": {
+                    "allowNull": false,
+                    "field": "employer",
+                    "seqType": "Sequelize.STRING"
+                },
+                "yearStart": {
+                    "allowNull": false,
+                    "field": "yearStart",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "yearEnd": {
+                    "field": "yearEnd",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "title": {
+                    "field": "title",
                     "seqType": "Sequelize.STRING"
                 },
                 "createdAt": {
