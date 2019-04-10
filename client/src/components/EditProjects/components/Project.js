@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { ProjectImage, Input, Textarea, Techlist, Links, Images } from './';
-import ReactFilestack from 'filestack-react';
+import { Input, Textarea, Techlist, Links, Images } from './';
 class Project extends Component {
 
     renderEditor = (section) => {

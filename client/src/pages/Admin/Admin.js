@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LayoutNoSidebar, LoginForm, EditProjects } from '../../components';
+import { LayoutNoSidebar, LoginForm, AdminConsole } from '../../components';
 import axios from 'axios';
 
 class Admin extends Component {
@@ -14,6 +14,7 @@ class Admin extends Component {
             })
             .then((response) => {
                 if (response.data.success) {
+                    sessionStorage.setItem("loggedIn", "true")
                     this.setState({
                         loggedIn: true
                     })
@@ -27,7 +28,7 @@ class Admin extends Component {
     render() {
         return(
             <LayoutNoSidebar>
-                {(this.state.loggedIn) ? <EditProjects /> : <LoginForm login={this.login} />}
+                {(this.state.loggedIn || (sessionStorage.getItem("loggedIn") === "true")) ? <AdminConsole /> : <LoginForm login={this.login} />}
             </LayoutNoSidebar>
         )
     }

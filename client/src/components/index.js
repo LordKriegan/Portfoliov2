@@ -8,6 +8,9 @@ import Alert from './Alert';
 import ProjectModal from './ProjectModal';
 import LoginForm from './LoginForm';
 import EditProjects from './EditProjects';
+import AdminConsole from './AdminConsole';
+import Education from './Education';
+import WorkHistory from './WorkHistory';
 
 export {
     Navbar,
@@ -19,5 +22,8 @@ export {
     Alert,
     ProjectModal,
     LoginForm,
-    EditProjects
+    EditProjects,
+    Education,
+    WorkHistory,
+    AdminConsole
 }
