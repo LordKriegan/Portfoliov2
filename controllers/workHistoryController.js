@@ -1,14 +1,14 @@
 const db = require('../models');
 
-const educationController = {
+const workHistoryController = {
     create: (req, res) => {
         const params = {
-            school: req.body.school,
+            employer: req.body.employer,
             yearStart: req.body.yearStart
         };
         if (req.body.yearEnd) params.yearEnd = req.body.yearEnd;
-        if (req.body.degree) params.degree = req.body.degree;
-        db.Education
+        if (req.body.title) params.title = req.body.title;
+        db.WorkHistory
             .create(params)
             .then((response) => {
                 res.json(response);
@@ -16,13 +16,13 @@ const educationController = {
             .catch((error) => {
                 console.error(error);
                 res.status(500).json({
-                    msg: "Error while trying to create education row!",
+                    msg: "Error while creating work history!",
                     error: error.message
-                });
-            });
+                })
+            })
     },
     findAll: (req, res) => {
-        db.Education
+        db.WorkHistory
             .findAll({})
             .then((response) => {
                 res.json(response);
@@ -30,19 +30,19 @@ const educationController = {
             .catch((error) => {
                 console.error(error);
                 res.status(500).json({
-                    msg: "Error while trying to fetch education!",
-                    error: error.message
+                    msg: "Error while trying to retrieve work history!",
+                    error: error.messsage
                 });
             });
     },
     update: (req, res) => {
         const params = {};
-        const {school, degree, yearStart, yearEnd} = req.body;
-        if (school) params.school = school;
-        if (degree) params.degree = degree;
+        const { employer, title, yearStart, yearEnd } = req.body;
+        if (employer) params.employer = employer;
+        if (title) params.title = title;
         if (yearStart) params.yearStart = yearStart;
         if (yearEnd) params.yearEnd = yearEnd;
-        db.Education
+        db.WorkHistory
             .update(params, {
                 where: {
                     id: req.params.id
@@ -53,30 +53,31 @@ const educationController = {
                 res.json(response);
             })
             .catch((error) => {
+                console.error(error);
                 res.status(500).json({
-                    msg: "Error while updating education!",
+                    msg: "Error while updating work history!",
                     error: error.message
-                })
-            })
+                });
+            });
     },
     delete: (req, res) => {
-        db.Education
+        db.WorkHistory
             .destroy({
                 where: {
                     id: req.params.id
                 }
             })
             .then((response) => {
-                res.json(response)
+                res.json(response);
             })
             .catch((error) => {
                 console.error(error);
                 res.status(500).json({
-                    msg: "Error while deleting education!",
+                    msg: "Error while deleting work history!",
                     error: error.message
                 });
             });
     }
 }
 
-module.exports = educationController;
+module.exports = workHistoryController;
