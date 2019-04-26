@@ -18,7 +18,7 @@ class Contact extends Component {
         });
     }
     handleClear = (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         this.setState({
             email: "",
             phoneNum: "",
@@ -47,6 +47,7 @@ class Contact extends Component {
                 })
                 .then((response) => {
                     console.log(response);
+                    this.handleClear();
                     this.showAlert("Your message has been sent! I will get back to you asap.", "alert-success");
                 })
                 .catch((error) => {
