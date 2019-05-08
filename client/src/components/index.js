@@ -9,8 +9,8 @@ import ProjectModal from './ProjectModal';
 import LoginForm from './LoginForm';
 import EditProjects from './EditProjects';
 import AdminConsole from './AdminConsole';
-import Education from './Education';
-import WorkHistory from './WorkHistory';
+import EditEducation from './EditEducation';
+import EditWorkHistory from './EditWorkHistory';
 
 export {
     Navbar,
@@ -23,7 +23,7 @@ export {
     ProjectModal,
     LoginForm,
     EditProjects,
-    Education,
-    WorkHistory,
+    EditEducation,
+    EditWorkHistory,
     AdminConsole
 }

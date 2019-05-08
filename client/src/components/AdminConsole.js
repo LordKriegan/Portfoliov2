@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { EditProjects, WorkHistory, Education } from './'
+import { EditProjects, EditWorkHistory, EditEducation } from '.'
 
 class AdminConsole extends Component {
     enumedComps = {
         editProjects: <EditProjects />,
-        workHistory: <WorkHistory />,
-        education: <Education />
+        workHistory: <EditWorkHistory />,
+        education: <EditEducation />
     }
     state = {
         section: "editProjects"

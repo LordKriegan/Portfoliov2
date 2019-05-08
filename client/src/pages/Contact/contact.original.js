@@ -1,24 +1,60 @@
 import React, { Component } from 'react'
 import { Card, DefaultLayout, Alert } from '../../components';
+import axios from 'axios';
+import ReCAPTCHA from "react-google-recaptcha";
 
 class Contact extends Component {
     state = {
-        name: "",
         email: "",
+        phoneNum: "",
         message: "",
-        phoneNum: ""
+        name: "",
+        alert: ""
     }
-    
-    onChangeHandler = ({ target: { name, value }}) => {
+
+    onChangeHandler = ({ target: { name, value } }) => {
         this.setState({
             [name]: value
         });
     }
+    handleClear = (e) => {
+        if (e) e.preventDefault();
+        this.setState({
+            email: "",
+            phoneNum: "",
+            message: "",
+            name: "",
+            error: "",
+            recaptcha: false
+        });
+    }
 
     handleSubmit = (e) => {
+        e.preventDefault();
         this.dismissAlert();
+        if (!this.state.recaptcha) {
+            this.showAlert("Please make sure the reCaptcha has been filled out.", "alert-danger");
+            return;
+        }
         const { name, phoneNum, email, message } = this.state;
-        if (!(name && message && (email || phoneNum))) {
+        if (name && message && (email || phoneNum)) {
+            axios
+                .post("/api/contact", {
+                    name,
+                    email,
+                    phoneNum,
+                    message
+                })
+                .then((response) => {
+                    console.log(response);
+                    this.handleClear();
+                    this.showAlert("Your message has been sent! I will get back to you asap.", "alert-success");
+                })
+                .catch((error) => {
+                    this.showAlert(error.message, "alert-danger");
+                })
+
+        } else {
             let missing = [];
             if (!name) missing.push("Name")
             if (!email) missing.push("E-mail")
@@ -26,7 +62,6 @@ class Contact extends Component {
             if (!message) missing.push("Message")
             const alertMessage = "Missing information: " + missing.join(", ")
             this.showAlert(alertMessage, "alert-danger");
-            e.preventDefault()
         }
     }
     showAlert = (message, type) => {
@@ -42,12 +77,27 @@ class Contact extends Component {
             alert: ""
         })
     }
-    
+    verifyCallback = (recaptchaToken) => {
+        
+        axios
+            .post("/api/contact/verifyCaptcha", {
+                token: recaptchaToken
+            })
+            .then((response) => {
+                
+                this.setState({
+                    recaptcha: response.data.success
+                })
+            })
+            .catch((error) => {
+                this.showAlert("Error while trying to resolve reCaptcha\n" + error.message, "alert-danger");
+            })
+    }
     render() {
         return (
             <DefaultLayout>
                 <Card title="Contact Me" titleClass="h1">
-                    <form onSubmit={this.handleSubmit} method="POST" action="https://formspree.io/qstationwala@gmail.com">
+                    <form>
                         <div className="form-group">
                             <label htmlFor="userName">Name: </label>
                             <input onChange={this.onChangeHandler} name="name" value={this.state.name} type="text" className="form-control" id="userName" placeholder="Enter email" />
@@ -65,10 +115,13 @@ class Contact extends Component {
                             <textarea onChange={this.onChangeHandler} name="message" value={this.state.message} className="form-control" id="userMessage" rows="3"></textarea>
                         </div>
                         <div className="btn-group float-right" role="group">
-                            <button type="submit" className="btn btn-default">Submit</button>
+                            <button onClick={this.handleSubmit} type="submit" className="btn btn-default">Submit</button>
                             <button onClick={this.handleClear} type="button" className="btn btn-primary">Clear</button>
                         </div>
-                        <input type="hidden" name="_next" value="/home"/>
+                        <ReCAPTCHA
+                            sitekey="6LdXOpoUAAAAANM_AT_qu3MueFSBclsrUx9FecW7"
+                            onChange={this.verifyCallback}
+                        />
                     </form>
                 </Card>
                 {(this.state.alert)

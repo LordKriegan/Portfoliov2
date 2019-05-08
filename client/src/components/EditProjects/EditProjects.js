@@ -27,26 +27,26 @@ class EditProjects extends Component {
     }
     render() {
         return (
-            <>
-            <div className="row">
-                <div className="col-8">
-                    {
-                        (this.state.projectList)
-                            ? <ProjectList name="projectId" onChange={this.onChange} projectList={this.state.projectList} />
-                            : <p>Loading Data...</p>
-                    }
+            <div className='jumbotron'>
+                <div className="row">
+                    <div className="col-8">
+                        {
+                            (this.state.projectList)
+                                ? <ProjectList name="projectId" onChange={this.onChange} projectList={this.state.projectList} />
+                                : <p>Loading Data...</p>
+                        }
+                    </div>
+                    <div className="col-4">
+                        <button onClick={() => this.setState({ projectId: "new project" })} type="button" className="btn btn-primary">Add New Project...</button>
+                    </div>
                 </div>
-                <div className="col-4">
-                    <button onClick={() => this.setState({projectId: "new project"})} type="button" className="btn btn-primary">Add New Project...</button>
+                <div className="row">
+                    <div className="col-12">
+                        {(this.state.projectId) ? <Project projectId={this.state.projectId} /> : ""}
+                    </div>
                 </div>
-            </div>
-            <div className="row">
-                <div className="col-12">
-                    {(this.state.projectId) ? <Project projectId={this.state.projectId} /> : ""}
-                </div>
-            </div>
 
-            </>
+            </div>
         )
     }
 
