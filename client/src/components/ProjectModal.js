@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from '.';
 import { Carousel } from 'react-responsive-carousel';
+
 import { FaExternalLinkAlt } from 'react-icons/fa'
 
 class ProjectModal extends Component {
