@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 router.post("/", (req, res) => {
-    if (req.body.user === process.env.admin && req.body.password === process.env.password) {
+    if (req.body.user.toLowerCase() === process.env.admin.toLowerCase() && req.body.password.toLowerCase() === process.env.password.toLowerCase()) {
         res.json({
             success: true
         });

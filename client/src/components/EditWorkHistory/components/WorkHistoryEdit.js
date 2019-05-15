@@ -3,8 +3,8 @@ import axios from 'axios';
 
 class EducationEdit extends Component {
     state = {
-        school: this.props.school || '',
-        degree: this.props.degree || '',
+        employer: this.props.employer || '',
+        title: this.props.title || '',
         yearStart: this.props.yearStart || '',
         yearEnd: this.props.yearEnd || ''
     }
@@ -17,8 +17,8 @@ class EducationEdit extends Component {
     }
     onSubmit = (e) => {
         e.preventDefault();
-        if (!this.state.school || !this.state.degree || !this.state.yearStart) return;
-        let axCall, axUrl = '/api/education';
+        if (!this.state.employer || !this.state.title || !this.state.yearStart) return;
+        let axCall, axUrl = '/api/workhistory';
         if (this.props.newFlag) {
             axCall = axios.post;
         }
@@ -27,16 +27,16 @@ class EducationEdit extends Component {
             axUrl += '/' + this.props.id
         }
         axCall(axUrl, {
-            school: this.state.school,
-            degree: this.state.degree,
+            employer: this.state.employer,
+            title: this.state.title,
             yearStart: this.state.yearStart,
             yearEnd: this.state.yearEnd
         })
             .then((response) => {
                 console.log(response.data);
                 this.setState({
-                    school: '',
-                    degree: '',
+                    employer: '',
+                    title: '',
                     yearStart: '',
                     yearEnd: ''
                 }, () => {
@@ -53,12 +53,12 @@ class EducationEdit extends Component {
         return (
             <form>
                 <div className="form-group">
-                    <label htmlFor="userName">School: </label>
-                    <input onChange={this.onChangeHandler} name="school" value={this.state.school} type="text" className="form-control" />
+                    <label htmlFor="userName">Employer: </label>
+                    <input onChange={this.onChangeHandler} name="employer" value={this.state.employer} type="text" className="form-control" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="userName">Degree: </label>
-                    <input onChange={this.onChangeHandler} name="degree" value={this.state.degree} type="text" className="form-control" />
+                    <label htmlFor="userName">Title: </label>
+                    <input onChange={this.onChangeHandler} name="title" value={this.state.title} type="text" className="form-control" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="userName">Year Start: </label>

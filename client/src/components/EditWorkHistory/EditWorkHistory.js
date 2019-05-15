@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { EducationCard, EducationEdit } from './components'
+import { WorkHistoryCard, WorkHistoryEdit } from './components';
 
-class EditEducation extends Component {
+class EditWorkHistory extends Component {
     state = {
-        education: ""
+        workhistory: ""
     }
     componentDidMount() {
         this.loadData()
     }
     loadData = () => {
         axios
-            .get('/api/education/all')
+            .get('/api/workhistory/all')
             .then(response => {
                 this.setState({
-                    education: response.data
+                    workhistory: response.data
                 }, () => console.log(response.data))
             })
             .catch(error => console.error(error));
     }
     renderCards = () => {
-        return this.state.education.map((elem, i) => {
-            return (<EducationCard key={i} loadData={this.loadData} info={elem} />)
+        return this.state.workhistory.map((elem, i) => {
+            return (<WorkHistoryCard key={i} loadData={this.loadData} info={elem} />)
         })
     }
     render() {
@@ -29,14 +29,14 @@ class EditEducation extends Component {
             <div className="jumbotron">
                 <div className="card">
                     <div className="card-body">
-                        <EducationEdit newFlag={true} loadData={this.loadData} />
+                        <WorkHistoryEdit newFlag={true} loadData={this.loadData} />
                     </div>
                 </div>
-                {(this.state.education) ? this.renderCards() : ''}
+                {(this.state.workhistory) ? this.renderCards() : ''}
 
             </div>
         )
     }
 }
 
-export default EditEducation;
+export default EditWorkHistory;

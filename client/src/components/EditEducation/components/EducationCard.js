@@ -27,7 +27,7 @@ class EducationCard extends Component {
                 <div className="card-body text-center">
                     {(!this.state.edit)  
                     ? <Education edit={this.toggleEdit} delete={() => this.deleteEd(this.props.info.id)} degree={this.props.info.degree} school={this.props.info.school} yearStart={this.props.info.yearStart} yearEnd={this.props.info.yearEnd} />
-                    : <EducationEdit edit={this.toggleEdit} id={this.props.info.id} loadData={this.props.loadData} degree={this.props.info.degree} school={this.props.info.school} yearStart={this.props.info.yearStart} yearEnd={this.props.info.yearEnd} /> }
+                    : <EducationEdit newFlag={false} edit={this.toggleEdit} id={this.props.info.id} loadData={this.props.loadData} degree={this.props.info.degree} school={this.props.info.school} yearStart={this.props.info.yearStart} yearEnd={this.props.info.yearEnd} /> }
                     </div>
             </div>
         )
