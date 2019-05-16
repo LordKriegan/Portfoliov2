@@ -49,3 +49,10 @@ html, body {
 .margTop {
   margin-top: 10px;
 }
+
+.carousel.carousel-slider {
+  background: rgba(0,0,0,0);
+}
+.carousel .slide {
+  background: rgba(0,0,0,0);
+}

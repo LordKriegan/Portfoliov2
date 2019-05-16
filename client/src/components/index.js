@@ -11,6 +11,7 @@ import EditProjects from './EditProjects';
 import AdminConsole from './AdminConsole';
 import EditEducation from './EditEducation';
 import EditWorkHistory from './EditWorkHistory';
+import AboutMe from './AboutMe';
 
 
 export {
@@ -26,5 +27,6 @@ export {
     EditProjects,
     EditEducation,
     EditWorkHistory,
-    AdminConsole
+    AdminConsole,
+    AboutMe
 }

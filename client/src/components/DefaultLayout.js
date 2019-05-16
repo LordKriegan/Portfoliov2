@@ -4,13 +4,11 @@ import { Sidebar } from '.';
 function DefaultLayout(props) {
     return (
         <>
-            <div style={{marginTop: "10px"}} className="col-sm-12 col-md-9">
+            <div className="col-sm-12 col-md-9">
                 {props.children}
             </div>
             <div className="col-sm-12 col-md-3">
-                <div style={{paddingTop: "10px"}} className="menu sticky-top">
-                    <Sidebar />
-                </div>
+                <Sidebar />
             </div>
         </>
     );
