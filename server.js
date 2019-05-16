@@ -24,7 +24,7 @@ if (!isDev) {
 
 app.use("/api", require('./routes/routes'));
 //start server
-db.sequelize.sync({force: false}).then(function() {
+db.sequelize.sync({force: isDev}).then(function() {
     app.listen(port, function() {
         console.log("App listening on PORT " + port);
     });
