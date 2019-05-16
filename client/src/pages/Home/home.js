@@ -28,7 +28,7 @@ class Home extends Component {
                         <div className="parentScroller">
                             <h2>Education</h2>
                             <div className="childScroller">
-                                {(Array.isArray(this.state.education))
+                                {(this.state.education)
                                     ? this.state.education.map(elem => <WorkEdCard key={elem.id} type="education" school={elem.school} degree={elem.degree} yearStart={elem.yearStart} yearEnd={elem.yearEnd} />)
                                     : "Loading Education..."
                                 }
@@ -37,7 +37,7 @@ class Home extends Component {
                         <div className="parentScroller">
                             <h2>Work History</h2>
                             <div className="childScroller">
-                                {(Array.isArray(this.state.workhistory))
+                                {(this.state.workhistory)
                                     ? this.state.workhistory.map(elem => <WorkEdCard key={elem.id} type="workhistory" employer={elem.employer} title={elem.title} yearStart={elem.yearStart} yearEnd={elem.yearEnd} />)
                                     : "Loading Work History..."
                                 }
