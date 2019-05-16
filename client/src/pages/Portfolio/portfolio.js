@@ -50,42 +50,47 @@ class Portfolio extends Component {
         return (
             <DefaultLayout>
                 <Card title="Portfolio" titleClass="h1">
-                    {(this.state.data)
-                        ? <div className="row">
-                            <div className="col-12">
-                                <div style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    flexWrap: "wrap",
-                                    justifyContent: "center"
-                                }}>
-                                    {this.state.data.map((elem, i) => {
-                                        return(
-                                            <div onClick={() => this.onClickHandler(elem)} style={{
-                                                border: "groove",
-                                                position: "relative",
-                                                margin: "5px",
-                                                cursor: "pointer"
-                                            }}>
-                                                <img style={{
-                                                    height: "240px",
-                                                    width: "320px",
-                                                    objectFit: "scale-down"
-                                                }} className="img-fluid mx-auto d-block" src={elem.Images[0].imageLink} alt={elem.title} />
-                                                <p style={{
-                                                    backgroundColor: "rgba(0, 0, 0, 0.5",
-                                                    color: "white",
-                                                    bottom: "10px",
-                                                    position: "absolute",
-                                                    width: "100%"
-                                                }} className="text-center">{elem.title}</p>
-                                            </div>
-                                        )
-                                    })}
+                    <div className="parentScroller">
+                        <div className="childScroller">
+                            {(this.state.data)
+                                ? <div className="row">
+                                    <div className="col-12">
+                                        <div style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            flexWrap: "wrap",
+                                            justifyContent: "center"
+                                        }}>
+                                            {this.state.data.map((elem, i) => {
+                                                return (
+                                                    <div onClick={() => this.onClickHandler(elem)} style={{
+                                                        border: "groove",
+                                                        position: "relative",
+                                                        margin: "5px",
+                                                        cursor: "pointer"
+                                                    }}>
+                                                        <img style={{
+                                                            height: "240px",
+                                                            width: "320px",
+                                                            objectFit: "scale-down"
+                                                        }} className="img-fluid mx-auto d-block" src={elem.Images[0].imageLink} alt={elem.title} />
+                                                        <p style={{
+                                                            backgroundColor: "rgba(0, 0, 0, 0.5",
+                                                            color: "white",
+                                                            bottom: "10px",
+                                                            position: "absolute",
+                                                            width: "100%"
+                                                        }} className="text-center">{elem.title}</p>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                : <p>Loading data...</p>}
                         </div>
-                        : <p>Loading data...</p>}
+                    </div>
+
                 </Card>
                 <Modal
                     isOpen={this.state.modalIsOpen}
