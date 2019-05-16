@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //create routes
+app.use("/api", require('./routes/routes'));
+
 if (!isDev) {
     app.use(express.static(path.join(__dirname + '/client/build')));
     app.get("*", (req, res) => {
@@ -22,7 +24,7 @@ if (!isDev) {
     });
 }
 
-app.use("/api", require('./routes/routes'));
+
 //start server
 db.sequelize.sync({force: isDev}).then(function() {
     app.listen(port, function() {
