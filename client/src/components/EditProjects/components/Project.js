@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { ProjectImage, Input, Textarea, Techlist, Links, Images } from './';
-import ReactFilestack from 'filestack-react';
+import { Input, Textarea, Techlist, Links, Images } from './';
 class Project extends Component {
 
     renderEditor = (section) => {
@@ -15,7 +14,7 @@ class Project extends Component {
             case "role":
                 return (<Textarea name="role" value={this.state.role} onChange={this.onChange} />)
             case "links":
-               return <Links ghLink={this.state.ghLink} liveLink={this.state.liveLink} onChange={this.onChange} />
+                return <Links ghLink={this.state.ghLink} liveLink={this.state.liveLink} onChange={this.onChange} />
             case "images":
                 return (<Images images={this.state.images} addImages={this.addImages} removeImg={this.removeImg} />)
             default:
@@ -133,6 +132,19 @@ class Project extends Component {
                 console.error(error)
             })
     }
+    deleteProject = () => {
+        const { projectId } = this.state;
+        
+            axios
+                .delete("/api/projects/" + projectId)
+                .then((response) => {
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        
+    }
     saveProject = () => {
         const { title, liveLink, ghLink, summary, tech, role, images, projectId } = this.state;
         if ((!title) ||
@@ -182,31 +194,34 @@ class Project extends Component {
     render() {
         return (
             <>
-                <div className="row">
-                    <div className="col-12 text-center">
-                        <div className="btn-group">
-                            <button onClick={this.onClick} name="title" type="button" className="btn btn-primary">Title</button>
-                            <button onClick={this.onClick} name="summary" type="button" className="btn btn-primary">Summary</button>
-                            <button onClick={this.onClick} name="tech" type="button" className="btn btn-primary">Technologies</button>
-                            <button onClick={this.onClick} name="role" type="button" className="btn btn-primary">My Role</button>
-                            <button onClick={this.onClick} name="links" type="button" className="btn btn-primary">Links</button>
-                            <button onClick={this.onClick} name="images" type="button" className="btn btn-primary">Images</button>
-                        </div>
+            <div className="row">
+                <div className="col-12 text-center">
+                    <div className="btn-group">
+                        <button onClick={this.onClick} name="title" type="button" className="btn btn-primary">Title</button>
+                        <button onClick={this.onClick} name="summary" type="button" className="btn btn-primary">Summary</button>
+                        <button onClick={this.onClick} name="tech" type="button" className="btn btn-primary">Technologies</button>
+                        <button onClick={this.onClick} name="role" type="button" className="btn btn-primary">My Role</button>
+                        <button onClick={this.onClick} name="links" type="button" className="btn btn-primary">Links</button>
+                        <button onClick={this.onClick} name="images" type="button" className="btn btn-primary">Images</button>
                     </div>
                 </div>
+            </div>
 
-                <div className="row">
-                    <div className="col-12">
-                        {/* {this.sections[this.state.section]} */}
-                        {this.renderEditor(this.state.section)}
-                    </div>
+            <div className="row">
+                <div className="col-12">
+                    {/* {this.sections[this.state.section]} */}
+                    {this.renderEditor(this.state.section)}
                 </div>
+            </div>
 
-                <div className="row">
-                    <div className="col-12">
-                        <button onClick={this.saveProject} type="button" className="btn btn-primary float-right">Save</button>
+            <div className="row">
+                <div className="col-12">
+                    <div className="btn-group float-right">
+                        <button onClick={() => { if (window.confirm('Are you sure you wish to delete this project?')) this.deleteProject() } } type="button" className="btn btn-danger">Delete</button>
+                        <button onClick={this.saveProject} type="button" className="btn btn-primary">Save</button>
                     </div>
                 </div>
+            </div>
             </>
         )
     }

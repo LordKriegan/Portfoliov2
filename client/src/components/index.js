@@ -8,6 +8,12 @@ import Alert from './Alert';
 import ProjectModal from './ProjectModal';
 import LoginForm from './LoginForm';
 import EditProjects from './EditProjects';
+import AdminConsole from './AdminConsole';
+import EditEducation from './EditEducation';
+import EditWorkHistory from './EditWorkHistory';
+import AboutMe from './AboutMe';
+import WorkEdCard from './WorkEdCard';
+
 
 export {
     Navbar,
@@ -19,5 +25,10 @@ export {
     Alert,
     ProjectModal,
     LoginForm,
-    EditProjects
+    EditProjects,
+    EditEducation,
+    EditWorkHistory,
+    AdminConsole,
+    AboutMe,
+    WorkEdCard
 }

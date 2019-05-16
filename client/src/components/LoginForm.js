@@ -20,7 +20,7 @@ class LoginForm extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col-sm-4 offset-sm-4">
+                <div className="col-4 offset-sm-4">
                     <form>
                         <div className="form-group">
                             <label htmlFor="userName">User Name</label>

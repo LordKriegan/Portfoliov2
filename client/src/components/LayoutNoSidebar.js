@@ -3,7 +3,7 @@ import React from 'react'
 function LayoutNoSidebar(props) {
     return (
         <>
-            <div className="col-sm-12">
+            <div className="col-12">
                 {props.children}
             </div>
         </>
