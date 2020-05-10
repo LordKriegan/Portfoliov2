@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { EditProjects, EditWorkHistory, EditEducation } from '.'
+import { EditProjects, EditWorkHistory, EditEducation, EditSkills } from '.'
 
 class AdminConsole extends Component {
     enumedComps = {
         editProjects: <EditProjects />,
         workHistory: <EditWorkHistory />,
-        education: <EditEducation />
+        education: <EditEducation />,
+        skills: <EditSkills />
     }
     state = {
         section: "editProjects"
@@ -25,7 +26,8 @@ class AdminConsole extends Component {
                     <div className="btn-group">
                         <button onClick={this.onClick} className="btn btn-primary" name="editProjects">Projects</button>
                         <button onClick={this.onClick} className="btn btn-primary" name="education">Education</button>
-                        <button onClick={this.onClick} className="btn btn-primary" name="workHistory">Work History</button>                        
+                        <button onClick={this.onClick} className="btn btn-primary" name="workHistory">Work History</button>
+                        <button onClick={this.onClick} className="btn btn-primary" name="skills">Skill Set</button>                        
                     </div>
                 </div>
             </div>

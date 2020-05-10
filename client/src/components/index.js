@@ -13,6 +13,7 @@ import EditEducation from './EditEducation';
 import EditWorkHistory from './EditWorkHistory';
 import AboutMe from './AboutMe';
 import WorkEdCard from './WorkEdCard';
+import EditSkills from './EditSkills';
 
 
 export {
@@ -30,5 +31,6 @@ export {
     EditWorkHistory,
     AdminConsole,
     AboutMe,
-    WorkEdCard
+    WorkEdCard,
+    EditSkills
 }

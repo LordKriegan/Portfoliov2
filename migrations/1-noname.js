@@ -7,6 +7,7 @@ var Sequelize = require('sequelize');
  *
  * createTable "Education", deps: []
  * createTable "Projects", deps: []
+ * createTable "Skills", deps: []
  * createTable "WorkHistories", deps: []
  * createTable "Images", deps: [Projects]
  *
@@ -15,7 +16,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "noname",
-    "created": "2019-04-10T04:12:11.706Z",
+    "created": "2019-06-14T16:49:32.498Z",
     "comment": ""
 };
 
@@ -103,6 +104,42 @@ var migrationCommands = [{
                 "role": {
                     "type": Sequelize.STRING,
                     "field": "role",
+                    "allowNull": false
+                },
+                "createdAt": {
+                    "type": Sequelize.DATE,
+                    "field": "createdAt",
+                    "allowNull": false
+                },
+                "updatedAt": {
+                    "type": Sequelize.DATE,
+                    "field": "updatedAt",
+                    "allowNull": false
+                }
+            },
+            {}
+        ]
+    },
+    {
+        fn: "createTable",
+        params: [
+            "Skills",
+            {
+                "id": {
+                    "type": Sequelize.INTEGER,
+                    "field": "id",
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "allowNull": false
+                },
+                "name": {
+                    "type": Sequelize.STRING,
+                    "field": "name",
+                    "allowNull": false
+                },
+                "rating": {
+                    "type": Sequelize.INTEGER,
+                    "field": "rating",
                     "allowNull": false
                 },
                 "createdAt": {
