@@ -27,4 +27,20 @@ router.get('/sign-s3', (req, res) => {
     });
 });
 
+router.delete('/delete', (req, res) => {
+    const s3 = new aws.S3();
+    const { fileName } = req.query;
+    const params = {
+        Bucket: S3BUCKET,
+        Key: fileName
+    }
+    s3.headObject(params, (err, data) => {
+        if (err) res.status(500).json(err);
+        s3.deleteObject(params, (err, data) => {
+            if (err) res.status(500).json(err);
+            res.json(data)
+        });
+    });
+});
+
 module.exports = router;

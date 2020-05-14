@@ -1,8 +1,27 @@
 import React from 'react';
 import { ProjectImage } from './';
-import ReactFilestack from 'filestack-react';
+import axios from 'axios';
 
 const Images = (props) => {
+    const onChangeHandler = (e) => {
+        const file = e.target.files[0];
+        axios
+            .get(`/api/bucket/sign-s3?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`)
+            .then(signedResponse => {
+                axios
+                .put(signedResponse.data.signedRequest,file, {    
+                    headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                })
+                .then(response => {
+                    console.log("upload successful");
+                    props.addImages([signedResponse.data.url]);
+                })
+                .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
+    }
     return (<>
         <div className="row">
             <div className="col-12">
@@ -22,21 +41,10 @@ const Images = (props) => {
         </div>
         <div className="row">
             <div className="col-12 text-center">
-                <ReactFilestack
-                    apikey="A1HD3At9LTJ6SPmsQpgBaz"
-                    buttonText="Add Images"
-                    buttonClass="btn btn-outline-secondary"
-                    options={{
-                        accept: 'image/*',
-                        fromSources: ["local_file_system"],
-                        maxFiles: 20,
-                        storeTo: {
-                            location: 's3',
-                        },
-                    }}
-                    onSuccess={props.addImages}
-                    preload={true}
-                />
+                <div id="inputContainer">
+                    <input accept="image/*" id="uploadFile" type="file" onChange={onChangeHandler}/>
+                    <div id="dragbox"><p id="dragboxmsg">Drag and drop a file to upload!</p></div>
+                </div>
             </div>
         </div>
     </>)

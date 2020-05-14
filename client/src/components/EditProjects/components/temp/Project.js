@@ -21,28 +21,24 @@ class Project extends Component {
                 return null
         }
     }
-    addImages = (images) => {
+    addImages = (result) => {
+        if (result.filesFailed.length) {
+            console.error("Error while uplaoding files");
+        } else {
+            console.log(result)
             let imgArr = this.state.images.slice();
-            let newImgs = images.map((elem) => elem.url);
+            let newImgs = result.filesUploaded.map((elem) => elem.url);
             this.setState({
                 images: imgArr.concat(newImgs)
             });
+        }
     }
     removeImg = (i) => {
         let imgArr = this.state.images.slice();
-        const oldImg = imgArr.splice(i, 1);
-        const oldImgName = oldImg.split("\\").pop().split("/").pop();
-        axios
-            .delete(`/api/bucket/delete?fileName=${oldImgName}`)
-            .then((response) => {
-                console.log(response)
-                this.setState({
-                    images: imgArr
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        imgArr.splice(i, 1);
+        this.setState({
+            images: imgArr
+        })
     }
     removeTech = (i) => {
         let techArr = this.state.tech.slice();
