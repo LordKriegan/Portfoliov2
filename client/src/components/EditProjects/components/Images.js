@@ -5,13 +5,15 @@ import axios from 'axios';
 const Images = (props) => {
     const onChangeHandler = (e) => {
         const file = e.target.files[0];
+        console.log("=======",file, file.name, file.type,"=======")
         axios
             .get(`/api/bucket/sign-s3?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`)
             .then(signedResponse => {
                 axios
-                .put(signedResponse.data.signedRequest,file, {    
+                .put(signedResponse.data.signedRequest, file, {    
                     headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': file.type,
+                    'x-amz-acl': 'public-read'
                   }
                 })
                 .then(response => {

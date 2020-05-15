@@ -23,10 +23,9 @@ class Project extends Component {
     }
     addImages = (images) => {
             let imgArr = this.state.images.slice();
-            let newImgs = images.map((elem) => elem.url);
             this.setState({
-                images: imgArr.concat(newImgs)
-            });
+                images: imgArr.concat(images)
+            }, console.log(this.state));
     }
     removeImg = (i) => {
         let imgArr = this.state.images.slice();

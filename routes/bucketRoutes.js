@@ -2,7 +2,6 @@ const router = require('express').Router();
 const aws = require('aws-sdk');
 
 const { S3BUCKET, S3REGION } = process.env;
-
 aws.config.region = S3REGION;
 
 router.get('/sign-s3', (req, res) => {
