@@ -29,19 +29,24 @@ class Project extends Component {
     }
     removeImg = (i) => {
         let imgArr = this.state.images.slice();
-        const oldImg = imgArr.splice(i, 1);
-        const oldImgName = oldImg.split("\\").pop().split("/").pop();
-        axios
-            .delete(`/api/bucket/delete?fileName=${oldImgName}`)
-            .then((response) => {
-                console.log(response)
-                this.setState({
-                    images: imgArr
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        // const oldImg = imgArr.splice(i, 1)[0];
+        // console.log(oldImg);
+        // const oldImgName = oldImg.split("\\").pop().split("/").pop();
+        // axios
+        //     .delete(`/api/bucket/delete?fileName=${oldImgName}`)
+        //     .then((response) => {
+        //         console.log(response)
+        //         this.setState({
+        //             images: imgArr
+        //         });
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
+        imgArr.splice(i,1);
+        this.setState({
+            images: imgArr
+        });
     }
     removeTech = (i) => {
         let techArr = this.state.tech.slice();
