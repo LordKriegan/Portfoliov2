@@ -18,7 +18,7 @@ const Images = (props) => {
                 })
                 .then(response => {
                     console.log("upload successful");
-                    props.addImages([signedResponse.data.url]);
+                    props.addImages([{imageLink: signedResponse.data.url, id: "NEW_IMAGE"}]);
                 })
                 .catch(error => console.error(error));
             })
@@ -35,7 +35,7 @@ const Images = (props) => {
                 }}>
                     {(props.images.length) ? props.images.map((elem, i) => {
                         return (
-                            <ProjectImage style={{ flex: "1 0 21%" }} key={i} image={elem} removeImg={() => props.removeImg(i)} />
+                            <ProjectImage style={{ flex: "1 0 21%" }} key={i} image={elem.imageLink} removeImg={() => props.removeImg(i, "manual")} />
                         )
                     }) : ""}
                 </div>

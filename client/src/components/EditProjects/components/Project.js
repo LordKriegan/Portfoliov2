@@ -27,26 +27,26 @@ class Project extends Component {
                 images: imgArr.concat(images)
             }, console.log(this.state));
     }
-    removeImg = (i) => {
+    removeImg = (i, type) => {
+        if (type === "manual") {
+            if (!window.confirm("Removing images is permanent. Do you wish to delete this image?")) return;
+        }
         let imgArr = this.state.images.slice();
-        // const oldImg = imgArr.splice(i, 1)[0];
-        // console.log(oldImg);
-        // const oldImgName = oldImg.split("\\").pop().split("/").pop();
-        // axios
-        //     .delete(`/api/bucket/delete?fileName=${oldImgName}`)
-        //     .then((response) => {
-        //         console.log(response)
-        //         this.setState({
-        //             images: imgArr
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-        imgArr.splice(i,1);
-        this.setState({
-            images: imgArr
-        });
+        const oldImg = imgArr.splice(i, 1)[0];
+        const oldImgName = oldImg.imageLink.split("\\").pop().split("/").pop();
+        axios
+            .delete(`/api/bucket/delete?fileName=${oldImgName}&imageId=${oldImg.id}`)
+            .then((response) => {
+                console.log(response)
+                if (type === "manual") {
+                    this.setState({
+                        images: imgArr
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
     removeTech = (i) => {
         let techArr = this.state.tech.slice();
@@ -119,12 +119,19 @@ class Project extends Component {
             })
         }
     }
+
+    componentWillUnmount() {
+        this.state.images.forEach((elem, i) => {
+            if (elem.id === "NEW_IMAGE") this.removeImg(i, "automatic")
+        });
+    }
     loadProject = () => {
         axios
             .get("/api/projects/" + this.state.projectId)
             .then((response) => {
-                console.log(response.data)
+                console.log(response.data[0].Images)
                 if (this.state.title !== response.data[0].title) {
+                    console.log(response.data.Images)
                     this.setState({
                         summary: response.data[0].summary,
                         role: response.data[0].role,
@@ -132,13 +139,13 @@ class Project extends Component {
                         tech: response.data[0].tech.split(","),
                         ghLink: response.data[0].ghLink,
                         liveLink: response.data[0].liveLink,
-                        images: response.data[0].Images.map((elem) => elem.imageLink)
+                        images: response.data[0].Images
                     })
                 }
             })
             .catch((error) => {
                 console.error(error)
-            })
+            });
     }
     deleteProject = () => {
         const { projectId } = this.state;
@@ -172,7 +179,7 @@ class Project extends Component {
                 summary: summary,
                 tech: tech.join(','),
                 role: role,
-                images: images
+                images: images.map(e => e.imageLink)
             }
             console.log(newData)
             if (projectId === "new project") {
