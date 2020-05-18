@@ -72,7 +72,7 @@
                         "model": "Projects",
                         "key": "id"
                     },
-                    "onDelete": "CASCADE",
+                    "onDelete": "cascade",
                     "onUpdate": "CASCADE",
                     "field": "ProjectId",
                     "seqType": "Sequelize.INTEGER"

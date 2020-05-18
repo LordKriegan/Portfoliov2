@@ -16,7 +16,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "noname",
-    "created": "2019-06-14T16:49:32.498Z",
+    "created": "2020-05-16T09:15:51.351Z",
     "comment": ""
 };
 
@@ -231,7 +231,7 @@ var migrationCommands = [{
                     "type": Sequelize.INTEGER,
                     "field": "ProjectId",
                     "onUpdate": "CASCADE",
-                    "onDelete": "CASCADE",
+                    "onDelete": "cascade",
                     "references": {
                         "model": "Projects",
                         "key": "id"

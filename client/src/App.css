@@ -80,3 +80,43 @@ html, body {
     max-height: 900px;
   }
 }
+
+input[type="file"]{
+  height:200px;
+  width:100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  height:200px;
+  width:100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+#inputContainer {
+  position: relative;
+}
+
+#dragbox {
+  width: 100%;
+  height: 200px;
+  border: 5px dashed black;
+  background-color: #3A3F44;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+#adminButtons {
+  padding-bottom: 10px;
+}
