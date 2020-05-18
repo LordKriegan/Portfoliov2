@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const aws = require('aws-sdk');
 const db = require('../models');
+const uuid = require('uuid-random');
 
 const { S3BUCKET, S3REGION } = process.env;
 aws.config.region = S3REGION;
@@ -8,10 +9,11 @@ aws.config.region = S3REGION;
 router.get('/sign-s3', (req, res) => {
     const s3 = new aws.S3();
     const { fileName, fileType } = req.query;
-
+    const newFilename = `${uuid()}_${fileName}`;
+    
     s3.getSignedUrl('putObject', {
         Bucket: S3BUCKET,
-        Key: fileName,
+        Key: `${newFilename}`,
         Expires: 60,
         ContentType: fileType,
         ACL: 'public-read'
@@ -22,7 +24,7 @@ router.get('/sign-s3', (req, res) => {
         }
         res.json({
             signedRequest: data,
-            url: `https://${S3BUCKET}.s3.amazonaws.com/${fileName}`
+            url: `https://${S3BUCKET}.s3.amazonaws.com/${newFilename}`
         });
     });
 });

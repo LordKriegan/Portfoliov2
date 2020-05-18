@@ -125,6 +125,10 @@ class Project extends Component {
             if (elem.id === "NEW_IMAGE") this.removeImg(i, "automatic")
         });
     }
+
+    imgCleanup () {
+        
+    }
     loadProject = () => {
         axios
             .get("/api/projects/" + this.state.projectId)
