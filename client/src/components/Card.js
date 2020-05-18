@@ -2,7 +2,7 @@ import React from 'react';
 
 function Card(props) {
     return (
-        <div className="card">
+        <div style={(props.heightFix) ? props.heightFix : {}} className="card">
             <div className="card-header">
                 <span className={"font-italic " + props.titleClass}>{props.title}</span>
             </div>

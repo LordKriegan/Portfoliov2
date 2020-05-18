@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Images.associate = function(models) {
     models.Images.belongsTo(models.Project, {
+      onDelete: "cascade",
       foreignKey: {
           allowNull: false
       }

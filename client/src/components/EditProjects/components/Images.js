@@ -1,9 +1,38 @@
 import React from 'react';
 import { ProjectImage } from './';
-import ReactFilestack from 'filestack-react';
+import axios from 'axios';
 
 const Images = (props) => {
+    const onChangeHandler = (e) => {
+        const file = e.target.files[0];
+        console.log("=======",file, file.name, file.type,"=======")
+        axios
+            .get(`/api/bucket/sign-s3?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`)
+            .then(signedResponse => {
+                axios
+                .put(signedResponse.data.signedRequest, file, {    
+                    headers: {
+                    'Content-Type': file.type,
+                    'x-amz-acl': 'public-read'
+                  }
+                })
+                .then(response => {
+                    console.log("upload successful");
+                    props.addImages([{imageLink: signedResponse.data.url, id: "NEW_IMAGE"}]);
+                })
+                .catch(error => console.error(error));
+            })
+            .catch(error => console.error(error));
+    }
     return (<>
+        <div className="row">
+            <div className="col-12 col-sm-8 offset-sm-2 text-center">
+                <div id="inputContainer">
+                    <input accept="image/*" id="uploadFile" type="file" onChange={onChangeHandler}/>
+                    <div id="dragbox"><p id="dragboxmsg">Drag and drop a file to upload!</p></div>
+                </div>
+            </div>
+        </div>
         <div className="row">
             <div className="col-12">
                 <div style={{
@@ -14,31 +43,13 @@ const Images = (props) => {
                 }}>
                     {(props.images.length) ? props.images.map((elem, i) => {
                         return (
-                            <ProjectImage style={{ flex: "1 0 21%" }} key={i} image={elem} removeImg={() => props.removeImg(i)} />
+                            <ProjectImage style={{ flex: "1 0 21%" }} key={i} image={elem.imageLink} removeImg={() => props.removeImg(i, "manual")} />
                         )
                     }) : ""}
                 </div>
             </div>
         </div>
-        <div className="row">
-            <div className="col-12 text-center">
-                <ReactFilestack
-                    apikey="A1HD3At9LTJ6SPmsQpgBaz"
-                    buttonText="Add Images"
-                    buttonClass="btn btn-outline-secondary"
-                    options={{
-                        accept: 'image/*',
-                        fromSources: ["local_file_system"],
-                        maxFiles: 20,
-                        storeTo: {
-                            location: 's3',
-                        },
-                    }}
-                    onSuccess={props.addImages}
-                    preload={true}
-                />
-            </div>
-        </div>
+
     </>)
 }
 

@@ -111,7 +111,7 @@ const projectController = {
             })
     },
     delete: (req, res) => {
-        deleteProject(req.params.id)
+        return deleteProject(req.params.id)
             .then((response) => {
                 res.json(response)
             })

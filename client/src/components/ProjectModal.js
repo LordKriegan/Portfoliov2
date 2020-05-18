@@ -38,7 +38,7 @@ class ProjectModal extends Component {
 
     render() {
         return (
-            <Card title={this.props.project.title} titleClass="h1">
+            <Card heightFix={{height: "100%"}} title={this.props.project.title} titleClass="h1">
                 <div className="row">
                     <div className="col-12">
                         <Carousel useKeyboardArrows={true} emulateTouch={true} showArrows={false} showThumbs={false}>

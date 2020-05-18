@@ -27,9 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Project.associate = function (models) {
-    models.Project.hasMany(models.Images, {
-      onDelete: "cascade"
-  });
+    models.Project.hasMany(models.Images);
   };
   return Project;
 };

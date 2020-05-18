@@ -21,32 +21,24 @@ class Project extends Component {
                 return null
         }
     }
-    addImages = (images) => {
+    addImages = (result) => {
+        if (result.filesFailed.length) {
+            console.error("Error while uplaoding files");
+        } else {
+            console.log(result)
             let imgArr = this.state.images.slice();
+            let newImgs = result.filesUploaded.map((elem) => elem.url);
             this.setState({
-                images: imgArr.concat(images)
-            }, console.log(this.state));
-    }
-    removeImg = (i, type) => {
-        if (type === "manual") {
-            if (!window.confirm("Removing images is permanent. Do you wish to delete this image?")) return;
-        }
-        let imgArr = this.state.images.slice();
-        const oldImg = imgArr.splice(i, 1)[0];
-        const oldImgName = oldImg.imageLink.split("\\").pop().split("/").pop();
-        axios
-            .delete(`/api/bucket/delete?fileName=${oldImgName}&imageId=${oldImg.id}`)
-            .then((response) => {
-                console.log(response)
-                if (type === "manual") {
-                    this.setState({
-                        images: imgArr
-                    });
-                }
-            })
-            .catch((err) => {
-                console.log(err);
+                images: imgArr.concat(newImgs)
             });
+        }
+    }
+    removeImg = (i) => {
+        let imgArr = this.state.images.slice();
+        imgArr.splice(i, 1);
+        this.setState({
+            images: imgArr
+        })
     }
     removeTech = (i) => {
         let techArr = this.state.tech.slice();
@@ -119,23 +111,12 @@ class Project extends Component {
             })
         }
     }
-
-    componentWillUnmount() {
-        this.state.images.forEach((elem, i) => {
-            if (elem.id === "NEW_IMAGE") this.removeImg(i, "automatic")
-        });
-    }
-
-    imgCleanup () {
-        
-    }
     loadProject = () => {
         axios
             .get("/api/projects/" + this.state.projectId)
             .then((response) => {
-                console.log(response.data[0].Images)
+                console.log(response.data)
                 if (this.state.title !== response.data[0].title) {
-                    console.log(response.data.Images)
                     this.setState({
                         summary: response.data[0].summary,
                         role: response.data[0].role,
@@ -143,13 +124,13 @@ class Project extends Component {
                         tech: response.data[0].tech.split(","),
                         ghLink: response.data[0].ghLink,
                         liveLink: response.data[0].liveLink,
-                        images: response.data[0].Images
+                        images: response.data[0].Images.map((elem) => elem.imageLink)
                     })
                 }
             })
             .catch((error) => {
                 console.error(error)
-            });
+            })
     }
     deleteProject = () => {
         const { projectId } = this.state;
@@ -183,7 +164,7 @@ class Project extends Component {
                 summary: summary,
                 tech: tech.join(','),
                 role: role,
-                images: images.map(e => e.imageLink)
+                images: images
             }
             console.log(newData)
             if (projectId === "new project") {
@@ -215,7 +196,7 @@ class Project extends Component {
             <>
             <div className="row">
                 <div className="col-12 text-center">
-                    <div id="adminButtons" className="btn-group">
+                    <div className="btn-group">
                         <button onClick={this.onClick} name="title" type="button" className="btn btn-primary">Title</button>
                         <button onClick={this.onClick} name="summary" type="button" className="btn btn-primary">Summary</button>
                         <button onClick={this.onClick} name="tech" type="button" className="btn btn-primary">Technologies</button>
