@@ -26,6 +26,14 @@ const Images = (props) => {
     }
     return (<>
         <div className="row">
+            <div className="col-12 col-sm-8 offset-sm-2 text-center">
+                <div id="inputContainer">
+                    <input accept="image/*" id="uploadFile" type="file" onChange={onChangeHandler}/>
+                    <div id="dragbox"><p id="dragboxmsg">Drag and drop a file to upload!</p></div>
+                </div>
+            </div>
+        </div>
+        <div className="row">
             <div className="col-12">
                 <div style={{
                     display: "flex",
@@ -41,14 +49,7 @@ const Images = (props) => {
                 </div>
             </div>
         </div>
-        <div className="row">
-            <div className="col-12 text-center">
-                <div id="inputContainer">
-                    <input accept="image/*" id="uploadFile" type="file" onChange={onChangeHandler}/>
-                    <div id="dragbox"><p id="dragboxmsg">Drag and drop a file to upload!</p></div>
-                </div>
-            </div>
-        </div>
+
     </>)
 }
 

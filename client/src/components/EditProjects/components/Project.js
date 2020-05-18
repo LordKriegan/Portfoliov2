@@ -211,7 +211,7 @@ class Project extends Component {
             <>
             <div className="row">
                 <div className="col-12 text-center">
-                    <div className="btn-group">
+                    <div id="adminButtons" className="btn-group">
                         <button onClick={this.onClick} name="title" type="button" className="btn btn-primary">Title</button>
                         <button onClick={this.onClick} name="summary" type="button" className="btn btn-primary">Summary</button>
                         <button onClick={this.onClick} name="tech" type="button" className="btn btn-primary">Technologies</button>
