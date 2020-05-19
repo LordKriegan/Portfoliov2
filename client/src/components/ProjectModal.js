@@ -44,7 +44,7 @@ class ProjectModal extends Component {
                         <Carousel useKeyboardArrows={true} emulateTouch={true} showArrows={false} showThumbs={false}>
                             {this.props.project.Images.map((elem, i) => {
                                 return (
-                                    <img key={i} style={{ height: "50vh", width: "50vw" }} className="img-fluid" src={elem.imageLink} alt={this.props.project.title} />
+                                    <img key={i} style={{ height: "50vh", width: "auto" }} className="img-fluid" src={elem.imageLink} alt={this.props.project.title} />
                                 )
                             })}
                         </Carousel>
